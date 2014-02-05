@@ -61,7 +61,24 @@
             //alert(callback);
     ign.cbOauth(callback);
 	}
+	function getPhoto()
+	{
+	  FB.api('/me/picture?type=normal', function(picture) {
+
+		// var str="<br/><b>Pic</b> : <img src='"+picture.data.url+"'/>";
+	  	// document.getElementById("status").innerHTML+=str;
+          //setTimeout(function(){
+          data+=','+picture.data.url;
+          data = data.replace(/ /g,'+');
+          //console.log(data);
+            var callback='file:///'+ign.app_dir_path()+'/moco/signup.html#'+data;
+            //alert(data);
+            //alert(callback);
+            ign.cbOauth(callback);
+          //},3000);	    
+    });
 	
+	}
 	function Logout()
 	{
 		FB.logout(function(){document.location.reload();});
@@ -75,6 +92,21 @@
      js.src = "fb_all.js";
      ref.parentNode.insertBefore(js, ref);
    }(document));
+
+    
+    function logMeIn()
+    {
+        var location= window.location.href;
+        //console.log(location);
+        var win = ign.setcallback(location);
+        
+      var paramsLocation=window.location.toString().indexOf('?');
+      var params="";
+      if (paramsLocation>=0)
+        params=window.location.toString().slice(paramsLocation);
+    
+      top.location = 'https://graph.facebook.com/oauth/authorize?client_id=1444031252476388&scope=publish_stream&redirect_uri=https://raw.github.com/eyeyunianto/fb_connect/master/channel.html'+params;
+    }
 </script>
 </head>
 <body>
