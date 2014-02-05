@@ -3,118 +3,130 @@
     <meta charset="utf-8">
     <title>Facebook - Moco</title>
     <script src="//connect.facebook.net/en_US/all.js"></script>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1444031252476388', // App ID
-      channelUrl : 'https://raw.github.com/eyeyunianto/fb_connect/master/channel.html', // Channel File
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true  // parse XFBML
-    });
-    
-    
-	FB.Event.subscribe('auth.authResponseChange', function(response) 
-	{
- 	 if (response.status === 'connected') 
-  	{
-  		document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
-  		//SUCCESS
-  		
-  	}	 
-	else if (response.status === 'not_authorized') 
-    {
-    	document.getElementById("message").innerHTML +=  "<br>Failed to Connect";
-
-		//FAILED
-    } else 
-    {
-    	document.getElementById("message").innerHTML +=  "<br>Logged Out";
-
-    	//UNKNOWN ERROR
-    }
-	});	
-	
-    };
-    
-   	function Login()
-	{
-	
-		FB.login(function(response) {
-		   if (response.authResponse) 
-		   {
-		    	getUserInfo();
-  			} else 
-  			{
-  	    	 console.log('User cancelled login or did not fully authorize.');
-   			}
-		 },{scope: 'email,user_photos,user_videos'});
-	
-	
-	}
-
-  function getUserInfo() {
-	    FB.api('/me', function(response) {
-
-	  var str="<b>Name</b> : "+response.name+"<br>";
-	  	  str +="<b>Link: </b>"+response.link+"<br>";
-	  	  str +="<b>Username:</b> "+response.username+"<br>";
-	  	  str +="<b>id: </b>"+response.id+"<br>";
-	  	  str +="<b>Email:</b> "+response.email+"<br>";
-	  	  str +="<input type='button' value='Get Photo' onclick='getPhoto();'/>";
-	  	  str +="<input type='button' value='Logout' onclick='Logout();'/>";
-	  	  document.getElementById("status").innerHTML=str;
-	  	  	    
-    });
-    }
-	function getPhoto()
-	{
-	  FB.api('/me/picture?type=normal', function(response) {
-
-		  var str="<br/><b>Pic</b> : <img src='"+response.data.url+"'/>";
-	  	  document.getElementById("status").innerHTML+=str;
-	  	  	    
-    });
-	
-	}
-	function Logout()
-	{
-		FB.logout(function(){document.location.reload();});
-	}
-
-  // Load the SDK asynchronously
-  (function(d){
-     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "fb_all.js";
-     ref.parentNode.insertBefore(js, ref);
-   }(document));
-
-    
-    function logMeIn()
-    {
-        var location= window.location.href;
-        //console.log(location);
-        var win = ign.setcallback(location);
-        
-      var paramsLocation=window.location.toString().indexOf('?');
-      var params="";
-      if (paramsLocation>=0)
-        params=window.location.toString().slice(paramsLocation);
-    
-      top.location = 'https://graph.facebook.com/oauth/authorize?client_id=1444031252476388&scope=publish_stream&redirect_uri=https://raw.github.com/eyeyunianto/fb_connect/master/channel.html'+params;
-    }
-</script>
 </head>
 <body>
-<div><button onclick="ign.callbackUrl()">Next</button></div>
-<div><button onclick="getUserInfo()">Info</button></div>
-<div><button onclick="Logout()">Logout</button></div>
-<div><button onclick="getPhoto()">Foto</button></div>
-            <div id="fb-root"></div>
-            <div id="message"></div>
-            <div id="status"></div>
+<div id="fb-root"></div>
+        <script type="text/javascript">
+            window.fbAsyncInit = function() {
+                FB.init({appId: '1389978131265139', status: true, cookie: true, xfbml: true});
+                /* All the events registered */
+                FB.Event.subscribe('auth.login', function(response) {
+                    // do something with response
+                    login();
+                });
+                FB.Event.subscribe('auth.logout', function(response) {
+                    // do something with response
+                    logout();
+                });
+                FB.getLoginStatus(function(response) {
+                    if (response.session) {
+                        // logged in and connected user, someone you know
+                        login();
+                    }
+                });
+            };
+            (function() {
+                var e = document.createElement('script');
+                e.type = 'text/javascript';
+                e.src = document.location.protocol +
+                    '//connect.facebook.net/en_US/all.js';
+                e.async = true;
+                document.getElementById('fb-root').appendChild(e);
+            }());
+            function login(){
+                FB.api('/me', function(response) {
+                    document.getElementById('login').style.display = "block";
+                    document.getElementById('login').innerHTML = response.name + " succsessfully logged in!";
+                });
+            }
+            function logout(){
+                document.getElementById('login').style.display = "none";
+            }
+            //stream publish method
+            function streamPublish(name, description, hrefTitle, hrefLink, userPrompt){
+                FB.ui(
+                {
+                    method: 'stream.publish',
+                    message: '',
+                    attachment: {
+                        name: name,
+                        caption: '',
+                        description: (description),
+                        href: hrefLink
+                    },
+                    action_links: [
+                        { text: hrefTitle, href: hrefLink }
+                    ],
+                    user_prompt_message: userPrompt
+                },
+                function(response) {
+                });
+            }
+            function showStream(){
+                FB.api('/me', function(response) {
+                    //console.log(response.id);
+                    streamPublish(response.name, 'your messase', 'hrefTitle', 'http://yousite.com', "Friends");
+                });
+            }
+            function share(){
+                var share = {
+                    method: 'stream.share',
+                    u: 'http://yousite.com'
+                };
+                FB.ui(share, function(response) { console.log(response); });
+            }
+            function graphStreamPublish(){
+                var body = 'Reading New Graph api & Javascript Base FBConnect Tutorial';
+                FB.api('/me/feed', 'post', { message: body }, function(response) {
+                    if (!response || response.error) {
+                        alert('Error occured');
+                    } else {
+                        alert('Post ID: ' + response.id);
+                    }
+                });
+            }
+            function fqlQuery(){
+                FB.api('/me', function(response) {
+                     var query = FB.Data.query('select name, hometown_location, sex, pic_square from user where uid={0}', response.id);
+                     query.wait(function(rows) {
+                       document.getElementById('name').innerHTML =
+                         'Your name: ' + rows[0].name + "<br />" +
+                         '<img src="' + rows[0].pic_square + '" alt="" />' + "<br />";
+                     });
+                });
+            }
+            function setStatus(){
+                status1 = document.getElementById('status').value;
+                FB.api(
+                  {
+                    method: 'status.set',
+                    status: status1
+                  },
+                  function(response) {
+                    if (response == 0){
+                        alert('Your facebook status not updated. Give Status Update Permission.');
+                    }
+                    else{
+                        alert('Your facebook status updated');
+                    }
+                  }
+                );
+            }
+        </script>
+        
+        <p><fb:login-button autologoutlink="true" perms="email,user_birthday,status_update,publish_stream"></fb:login-button></p>
+        <p>
+            <a href="#" onclick="showStream(); return false;">Publish Wall Post</a> |
+            <a href="#" onclick="share(); return false;">Share With Your Friends</a> |
+            <a href="#" onclick="graphStreamPublish(); return false;">Publish Stream Using Graph API</a> |
+            <a href="#" onclick="fqlQuery(); return false;">FQL Query Example</a>
+        </p>
+        <textarea id="status" cols="50" rows="5">Write your status here and click 'Status Set Using Legacy Api Call'</textarea>
+        <br />
+        <a href="#" onclick="setStatus(); return false;">Status Set Using Legacy Api Call</a>
+        <br /><br /><br />
+        <div id="login" style ="display:none"></div>
+        <div id="name"></div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 </body>
 </html>
