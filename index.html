@@ -233,13 +233,14 @@
             }
             function getAccessToken() {
               var token =FB.getAccessToken();
-              var fs = ign.filesystem();
+              //var fs = ign.filesystem();
                 var link = fs.appPath().split('MacOS');
                 var callback=link+'/Resources/wwww/index.html#'+token;
                           //alert(data);
                           //alert(callback);
                   //ign.cbOauth(callback);
-                ign.setUrl(callback);
+                  var url = 'index.html#'+token;
+                ign.setUrl(url);
             }
 
         </script>
