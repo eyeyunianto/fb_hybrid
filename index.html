@@ -2,73 +2,72 @@
   <head>
     <meta charset="utf-8">
     <title>Facebook - Moco</title>
-    <script src="fb_all.js"></script>
+    <script type="text/javascript" async="" src="http://connect.facebook.net/en_US/all.js"></script>
     <script type="text/javascript">
-      var button;
-      var userInfo;
+    var button;
+    var userInfo;
 
-      window.fbAsyncInit = '1389978131265139',
-      status: true,
-      cookie: true,
-      xfbml: true,
-      oauth: true});
+    window.fbAsyncInit = function(){
+        FB.init({ appId: '1444031252476388',
+            status: true,
+            cookie: true,
+            xfbml: true,
+            oauth: true});
 
-      function updateButton(response) {
-          button = document.getElementById('fb-auth');
-          userInfo = document.getElementById('user-info');
-
-          if (response.status === 'connected') {
-              FB.api('/me', function(info) {
-                login(response, info);
-                getAccessToken();
+        function updateButton(response) {
+            button = document.getElementById('fb-auth');
+            userInfo = document.getElementById('user-info');
+      
+            if (response.status === 'connected') {
+                FB.api('/me', function(info) {
+                    login(response, info);
+          getAccessToken();
                 });
 
-              button.onclick = function() {
-                  FB.logout(function(response) {
-                      logout(response);
-                  });
-              };
-          } else {
-                    button.innerHTML = 'Login';
-                    button.onclick = function() {
-                        FB.login(function(response) {
-                            if (response.status === 'connected') {
-                                FB.api('/me', function(info) {
-                                    login(response, info);
-                                });
-                            } else {
-                                logout(response);
-                            }
-                        }, {scope:'email,user_birthday,status_update,publish_stream,user_about_me'});
-                    }
+                button.onclick = function() {
+                    FB.logout(function(response) {
+                        logout(response);
+                    });
+                };
+            } else {
+                button.innerHTML = 'Login';
+                button.onclick = function() {
+                    FB.login(function(response) {
+                        if (response.status === 'connected') {
+                            FB.api('/me', function(info) {
+                                login(response, info);
+                            });
+                        } else {
+                            logout(response);
+                        }
+                    }, {scope:'email,user_birthday,status_update,publish_stream,user_about_me'});
                 }
             }
+        }
 
-                //function onAuthLogin(response){
-                //    FB.ui({
-                //        client_id: '211488312251165',
-                //        method: 'oauth',
-                //        scope: 'email,user_birthday,status_update,publish_stream,user_about_me',
-                //        redirect_uri: 'http://facebook-javascript-api.appspot.com/html5.html',
-                //        response_type: 'token'
-                //    });
-                //}
-
-
-                // run once with current status and whenever the status changes
-                FB.getLoginStatus(updateButton);
-                //FB.Event.subscribe('auth.login', onAuthLogin);
-                FB.Event.subscribe('auth.statusChange', updateButton);
-            };
-            (function() {
-                var e = document.createElement('script');
-                e.type = 'text/javascript';
-                e.async = true;
-                e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-                document.getElementById('fb-root').appendChild(e);
-            }());
+        //function onAuthLogin(response){
+        //    FB.ui({
+        //        client_id: '211488312251165',
+        //        method: 'oauth',
+        //        scope: 'email,user_birthday,status_update,publish_stream,user_about_me',
+        //        redirect_uri: 'http://facebook-javascript-api.appspot.com/html5.html',
+        //        response_type: 'token'
+        //    });
+        //}
 
 
+        // run once with current status and whenever the status changes
+        FB.getLoginStatus(updateButton);
+        //FB.Event.subscribe('auth.login', onAuthLogin);
+        FB.Event.subscribe('auth.statusChange', updateButton);
+    };
+    (function() {
+        var e = document.createElement('script');
+        e.type = 'text/javascript';
+        e.async = true;
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    }());
     function login(response, info){
         if (response.authResponse) {
             var accessToken = response.authResponse.accessToken;
@@ -131,7 +130,7 @@
             }
         });
     }
-            
+    
     function clearPrompted() {
         FB.api(
             prompt('Enter the ID of the request to delete:'),
@@ -231,12 +230,12 @@
     function getAccessToken() {
       var token =FB.getAccessToken();
       var fs = ign.filesystem();
-      var link = fs.appPath().split('MacOS');
-      var callback=link+'/Resources/wwww/index.html#'+token;
-                //alert(data);
-                //alert(callback);
-        //ign.cbOauth(callback);
-      ign.setUrl(callback);
+        var link = fs.appPath().split('MacOS');
+        var callback=link+'/Resources/wwww/index.html#'+token;
+                  //alert(data);
+                  //alert(callback);
+          //ign.cbOauth(callback);
+        ign.setUrl(callback);
     }
 
 </script>
