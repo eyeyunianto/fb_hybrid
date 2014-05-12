@@ -55,11 +55,15 @@
 	}
 
   function getAccessToken() {
-	var token =FB.getAccessToken();
-	var callback='file:///'+ign.app_dir_path()+'/moco/signup.html#'+token;
+	 var token =FB.getAccessToken();
+   var fs = ign.filesystem();
+   var link = fs.appPath().split('MacOS');
+	 var callback=link+'/Resources/wwww/index.html#'+token;
             //alert(data);
             //alert(callback);
-    ign.cbOauth(callback);
+    //ign.cbOauth(callback);
+
+
 	}
 	
 	function Logout()
