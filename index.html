@@ -235,13 +235,14 @@
               var token =FB.getAccessToken();
               var fs = ign.filesystem();
                 var link = fs.appPath().replace('MacOS','Resources');
+                var callback=link+'/www/index.html#'+token;
                 //var callback=link[0]+'/Resources/wwww/index.html#'+token;
-                console.log(link);
+                console.log(calback);
                           //alert(data);
                           //alert(callback);
                   //ign.cbOauth(callback);
                   //var url = 'index.html#'+token;
-                ign.setUrl(link+'/www/index.html#'+token);
+                ign.setUrl(calback);
             }
 
         </script>
