@@ -243,19 +243,28 @@
                 
                 if(OSName=="Windows"){
                     var link = fs.appPath();
+                    var callback='file://'+link+'/www/index.html?'+token;
+                    console.log(callback);
+                    ign.setUrl(callback);
                 }else if(OSname=="MacOS"){
                     var link = fs.appPath().replace('MacOS','Resources');
+                    var callback='file://'+link+'/www/index.html?'+token;
+                    console.log(callback);
+                    ign.setUrl(callback);
                 }else{
                     var link = fs.appPath().replace('MacOS','Resources');
+                    var callback='file://'+link+'/www/index.html?'+token;
+                    console.log(callback);
+                    ign.setUrl(callback);
                 }
-                var callback='file://'+link+'/www/index.html?'+token;
+                //var callback='file://'+link+'/www/index.html?'+token;
                 //var callback=link[0]+'/Resources/wwww/index.html#'+token;
-                console.log(callback);
+                //console.log(callback);
                           //alert(data);
                           //alert(callback);
                   //ign.cbOauth(callback);
                   //var url = 'index.html#'+token;
-                ign.setUrl(callback);
+                //ign.setUrl(callback);
             }
 
         </script>
