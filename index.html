@@ -235,7 +235,19 @@
             function getAccessToken() {
               var token =FB.getAccessToken();
               var fs = ign.filesystem();
-                var link = fs.appPath().replace('MacOS','Resources');
+              var OSName="Unknown OS";
+                if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+                if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+                if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
+                if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
+                
+                if(OSName=="Windows"){
+                    var link = fs.appPath();
+                }else if(OSname=="MacOS"){
+                    var link = fs.appPath().replace('MacOS','Resources');
+                }else{
+                    var link = fs.appPath().replace('MacOS','Resources');
+                }
                 var callback='file://'+link+'/www/index.html?'+token;
                 //var callback=link[0]+'/Resources/wwww/index.html#'+token;
                 console.log(callback);
