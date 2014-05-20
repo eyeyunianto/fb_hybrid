@@ -235,7 +235,7 @@
               var token =FB.getAccessToken();
               var fs = ign.filesystem();
                 var link = fs.appPath().replace('MacOS','Resources');
-                var callback='file://'+link+'/www/index.html#'+token;
+                var callback='file://'+link+'/www/index.html?'+token;
                 //var callback=link[0]+'/Resources/wwww/index.html#'+token;
                 console.log(callback);
                           //alert(data);
