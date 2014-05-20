@@ -242,7 +242,7 @@
                 if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
                 
                 if(OSName=="Windows"){
-                    var link = fs.appPath();
+                    var link = fs.appPath().replace(' ','%20');
                     var callback='file://'+link+'/www/index.html?'+token;
                     console.log(callback);
                     //ign.setUrl(callback);
