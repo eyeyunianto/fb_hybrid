@@ -241,7 +241,8 @@
                 if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
                 if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
                 
-                if(OSName=="Windows"){
+                
+                if(navigator.appVersion.indexOf("Win")!=-1){
                     var link = fs.appPath().replace(/ /g,'%20');
                     var callback='file:///'+link+'/www/index.html?'+token;
                     console.log(callback);
@@ -249,8 +250,10 @@
                 }else {
                     var link = fs.appPath().replace('MacOS','Resources');
                     var callback='file://'+link+'/www/index.html?'+token;
+                    console.log(token);
                     console.log(link);
                     console.log(callback);
+                    console.log(fs.appPath());
                     //ign.setUrl(callback);
                 }
                 //var callback='file://'+link+'/www/index.html?'+token;
