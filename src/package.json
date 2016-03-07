@@ -11,7 +11,7 @@
     "height": 702,
     "title": "Moco",
     "icon": "img/icon/icon.png",
-    "toolbar": true,
+    "toolbar": false,
     "show": false
   },
   "single-instance":true,
