@@ -1,7 +1,7 @@
 {
   "main": "app.html",
   "name": "Moco",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "app-id": "com.Moco",
   "chromium-args": "--disable-setuid-sandbox",
   "window": {
@@ -30,10 +30,10 @@
   },
   "manifestUrl": "https://raw.githubusercontent.com/eyeyunianto/fb_hybrid/master/src/package.json",
   "packages": {
-    "osx64": "https://github.com/eyeyunianto/fb_hybrid/releases/download/v5.2.0/Moco.dmg",
-    "win32": "https://github.com/eyeyunianto/fb_hybrid/releases/download/v5.2.0/MocoSetup.exe",
-    "linux32": "https://github.com/eyeyunianto/fb_hybrid/releases/download/v5.2.0/Moco_linux32.deb",
-    "linux64": "https://github.com/eyeyunianto/fb_hybrid/releases/download/v5.2.0/Moco_linux64.deb"
+    "osx64": "https://github.com/eyeyunianto/fb_hybrid/releases/download/v5.2.1/Moco.dmg",
+    "win32": "https://github.com/eyeyunianto/fb_hybrid/releases/download/v5.2.1/MocoSetup.exe",
+    "linux32": "https://github.com/eyeyunianto/fb_hybrid/releases/download/v5.2.1/Moco_linux32.deb",
+    "linux64": "https://github.com/eyeyunianto/fb_hybrid/releases/download/v5.2.1/Moco_linux64.deb"
   }
 }
 
